@@ -15,7 +15,7 @@ const CalendarView = () => {
         date={selectedDate.date}
         handleDateChange={setSelectedDate}
       />
-      <CalendarGrid />
+      <CalendarGrid date={selectedDate.date} />
     </>
   );
 };

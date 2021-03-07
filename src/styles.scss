@@ -4,8 +4,8 @@
 // Common styles
 @import './constants/style-commons';
 
-// Component styles
-@import './components/DateNavigator/styles';
+// View styles
+@import './views/CalendarView/styles';
 
 body {
   margin: 0;
