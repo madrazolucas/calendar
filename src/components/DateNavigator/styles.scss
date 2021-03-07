@@ -2,5 +2,11 @@
   &__container {
     display: flex;
     justify-content: space-between;
+    margin: $space-14 0 $space-14;
+  };
+
+  &__text {
+    font-size: $font-size-large;
+    font-weight: $font-weight-semi-bold;
   };
 };
