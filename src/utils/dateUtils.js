@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { DAYS_IN_WEEK } from '../constants';
 
 export function getWeekdays() {
   const weekdayLongName = moment.weekdays();
@@ -64,7 +65,7 @@ export function getCurrentMonthCalendarizableDays(date) {
 
   const calendarDays = lastMonthDays.concat(currentMonthDays);
 
-  const nextMonthAmount = 7 - (calendarDays.length % 7);
+  const nextMonthAmount = DAYS_IN_WEEK - (calendarDays.length % DAYS_IN_WEEK);
   const nextMonthDays = [...Array(nextMonthAmount).keys()].map((day) => ({
     number: day + 1,
     isEnabled: false,
