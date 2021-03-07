@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardContent, Grid, withStyles } from '@material-ui/core';
-import useCommonStyles from '../../hooks/CalendarCellStyle';
+import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
 import styles from './styles';
 
 const CalendarDay = ({ date, isEnabled, height, classes }) => {
-  const commonClasses = useCommonStyles();
+  const commonClasses = useCalendarCommonStyles();
   const cardClasses = isEnabled
     ? [commonClasses.cell]
     : [commonClasses.cell, classes.cardDisabled];

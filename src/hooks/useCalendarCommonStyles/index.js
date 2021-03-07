@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useCommonStyles = makeStyles({
+const useCalendarCommonStyles = makeStyles({
   cell: {
     width: '13vw',
     minHeight: '5vh',
   },
 });
 
-export default useCommonStyles;
+export default useCalendarCommonStyles;
