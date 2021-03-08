@@ -39,6 +39,9 @@ export function getPreviousMonthDate(date) {
 
 export function getCurrentMonthCalendarizableDays(date) {
   const baseDate = moment(date);
+  const month = Number(baseDate.format('M'));
+  const year = Number(baseDate.format('YYYY'));
+
   const amountOfDays = baseDate.daysInMonth() + 1;
   const weekdayOfFirstDayOfCurrentMonth = Number(
     baseDate.startOf('month').day()
@@ -60,6 +63,8 @@ export function getCurrentMonthCalendarizableDays(date) {
   const currentMonthDays = [...Array(amountOfDays).keys()].map((day) => ({
     number: day,
     isEnabled: true,
+    month,
+    year,
   }));
   currentMonthDays.shift();
 

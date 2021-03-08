@@ -1,6 +1,13 @@
 export default () => ({
   cardDisabled: {
     backgroundColor: '#EDEDED',
+    cursor: 'not-allowed',
+  },
+  cardCalendarDay: {
+    cursor: 'cell',
+    '&:hover': {
+      background: '#aaeedd',
+    },
   },
   cardText: {
     color: '#3c4043',

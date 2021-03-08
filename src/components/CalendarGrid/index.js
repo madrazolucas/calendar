@@ -37,9 +37,12 @@ const CalendarGrid = ({ date }) => {
       <WeekdaysHeader />
       {calendarDays.map((day) => (
         <CalendarDay
-          date={day.number}
+          day={day.number}
+          month={day.month}
+          year={day.year}
           isEnabled={day.isEnabled}
           height={rowHeight}
+          handleSelectedReminderClick={() => {}}
         />
       ))}
     </Grid>
