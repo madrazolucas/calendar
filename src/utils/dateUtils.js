@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { DAYS_IN_WEEK } from '../constants';
+import { DAYS_IN_WEEK, MINUTES_IN_HOUR } from '../constants';
 
 export function getWeekdays() {
   const weekdayLongName = moment.weekdays();
@@ -81,22 +81,27 @@ export function getCurrentMonthCalendarizableDays(date) {
 
 export function buildMomentDateFromString({ date, time }) {
   const dateValue = `${date.day}-${date.month}-${date.year} ${time.hour}:${time.minutes}`;
-
-  console.log(dateValue);
-  console.log(moment(dateValue, 'D-M-YYYY HH:mm'));
-
   return moment(dateValue, 'D-M-YYYY HH:mm');
 }
 
-export function buildCurrentTimeMomentDateFromString({ date }) {
+export function buildCurrentTimeDate() {
   const hour = moment().format('HH');
   const minutes = moment().format('mm');
-  return buildMomentDateFromString({ date, time: { hour, minutes } });
+  return { hour, minutes };
+}
+
+export function compareRemindersTime(reminderA, reminderB) {
+  const minutesReminderA =
+    reminderA.time.hour * MINUTES_IN_HOUR + reminderA.time.minutes;
+  const minutesReminderB =
+    reminderB.time.hour * MINUTES_IN_HOUR + reminderB.time.minutes;
+  return minutesReminderA - minutesReminderB;
 }
 
 export default {
-  buildCurrentTimeMomentDateFromString,
+  buildCurrentTimeDate,
   buildMomentDateFromString,
+  compareRemindersTime,
   getWeekdays,
   getCurrentDate,
   getMonthYearDateText,

@@ -4,6 +4,7 @@ import { Card, CardContent, Grid, withStyles } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
 import CalendarReminders from '../CalendarReminders';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
+import { compareRemindersTime } from '../../utils/dateUtils';
 import styles from './styles';
 
 const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
@@ -28,12 +29,14 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
 
   const getRemindersFromDate = () => {
     const { reminders } = useContext(RemindersContext);
-    return reminders.filter(
+    const filteredByDateReminders = reminders.filter(
       (reminder) =>
         reminder.date.day === day &&
         reminder.date.month === month &&
         reminder.date.year === year
     );
+
+    return filteredByDateReminders.sort(compareRemindersTime);
   };
 
   return (

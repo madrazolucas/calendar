@@ -12,7 +12,7 @@ import { Button, DialogActions } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
 import {
   buildMomentDateFromString,
-  buildCurrentTimeMomentDateFromString,
+  buildCurrentTimeDate,
 } from '../../utils/dateUtils';
 
 const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
@@ -23,7 +23,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const [selectedTime, setSelectedTime] = useState(
     reminder
       ? buildMomentDateFromString({ date: selectedDate, time: reminder.time })
-      : buildCurrentTimeMomentDateFromString({ date: selectedDate })
+      : buildCurrentTimeDate()
   );
   const [selectedColor, setSelectedColor] = useState(
     reminder ? reminder.color : '#0011aa'
