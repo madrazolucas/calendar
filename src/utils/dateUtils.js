@@ -78,29 +78,24 @@ export function getCurrentMonthCalendarizableDays(date) {
 
   return calendarDays.concat(nextMonthDays);
 }
-
-export function buildMomentDateFromString({ date, time }) {
-  const dateValue = `${date.day}-${date.month}-${date.year} ${time.hour}:${time.minutes}`;
-  return moment(dateValue, 'D-M-YYYY HH:mm');
+export function getCurrentTime() {
+  return moment();
 }
 
-export function buildCurrentTimeDate() {
-  const hour = moment().format('HH');
-  const minutes = moment().format('mm');
-  return { hour, minutes };
-}
+const getMinutesFromMomentDateTime = (date) => {
+  const hours = moment(date).format('H');
+  const minutes = moment(date).format('m');
+  return hours * MINUTES_IN_HOUR + minutes;
+};
 
 export function compareRemindersTime(reminderA, reminderB) {
-  const minutesReminderA =
-    reminderA.time.hour * MINUTES_IN_HOUR + reminderA.time.minutes;
-  const minutesReminderB =
-    reminderB.time.hour * MINUTES_IN_HOUR + reminderB.time.minutes;
+  const minutesReminderA = getMinutesFromMomentDateTime(reminderA.time);
+  const minutesReminderB = getMinutesFromMomentDateTime(reminderB.time);
   return minutesReminderA - minutesReminderB;
 }
 
 export default {
-  buildCurrentTimeDate,
-  buildMomentDateFromString,
+  getCurrentTime,
   compareRemindersTime,
   getWeekdays,
   getCurrentDate,

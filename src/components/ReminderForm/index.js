@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import MomentUtils from '@date-io/moment';
 import ColorPicker from 'material-ui-color-picker';
@@ -10,10 +9,7 @@ import {
 } from '@material-ui/pickers';
 import { Button, DialogActions } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
-import {
-  buildMomentDateFromString,
-  buildCurrentTimeDate,
-} from '../../utils/dateUtils';
+import { getCurrentTime } from '../../utils/dateUtils';
 
 const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const { reminders, handleRemindersChange } = useContext(RemindersContext);
@@ -21,9 +17,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   // Form inputs as component state
   const [title, setTitle] = useState(reminder ? reminder.title : '');
   const [selectedTime, setSelectedTime] = useState(
-    reminder
-      ? buildMomentDateFromString({ date: selectedDate, time: reminder.time })
-      : buildCurrentTimeDate()
+    reminder ? reminder.time : getCurrentTime()
   );
   const [selectedColor, setSelectedColor] = useState(
     reminder ? reminder.color : '#0011aa'
@@ -41,16 +35,27 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   };
 
   const handleSaveReminder = () => {
-    handleRemindersChange([
-      ...reminders,
-      {
-        title,
-        city,
-        time: selectedTime,
-        color: selectedColor,
-        date: selectedDate,
-      },
-    ]);
+    const reminderToAdd = {
+      title,
+      city,
+      time: selectedTime,
+      color: selectedColor,
+      date: selectedDate,
+    };
+
+    if (reminder) {
+      const remindersToUpdate = [...reminders];
+      const reminderToModifyIndex = remindersToUpdate.findIndex(
+        (savedRemider) => savedRemider.title === reminder.title
+      );
+      if (reminderToModifyIndex !== -1) {
+        remindersToUpdate[reminderToModifyIndex] = reminderToAdd;
+      }
+      handleRemindersChange(remindersToUpdate);
+    } else {
+      handleRemindersChange([...reminders, reminderToAdd]);
+    }
+
     resetFormState();
     handleClose();
   };
@@ -65,9 +70,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   };
 
   const handleTimeChange = (time) => {
-    const hour = moment(time).format('HH');
-    const minutes = moment(time).format('mm');
-    setSelectedTime({ hour, minutes });
+    setSelectedTime(time);
   };
 
   const handleColorChange = (color) => {
@@ -123,7 +126,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
           disabled={titleHasError || title.length === 0}
           onClick={() => handleSaveReminder()}
         >
-          Save
+          {reminder ? 'Modify' : 'Create'}
         </Button>
       </DialogActions>
     </form>
