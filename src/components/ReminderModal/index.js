@@ -1,27 +1,29 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button,
   Dialog,
   DialogTitle,
-  DialogActions,
   DialogContent,
   DialogContentText,
   withStyles,
 } from '@material-ui/core';
 import ReminderForm from '../ReminderForm';
-import ReminderInformation from '../ReminderInformation';
 import RemindersContext from '../../context/remindersContext';
 import styles from './styles';
 
-const ReminderModal = ({ reminderInformation, selectedDate }) => {
-  const { handleSelectedRemindersChange } = useContext(RemindersContext);
+const ReminderModal = ({ selectedReminder, selectedDate }) => {
+  const {
+    handleSelectedRemindersDateChange,
+    handleSelectedReminderChange,
+  } = useContext(RemindersContext);
+
   const dateText = selectedDate
     ? `${selectedDate.day}/${selectedDate.month}/${selectedDate.year}`
     : '';
 
   const handleClose = () => {
-    handleSelectedRemindersChange(null);
+    handleSelectedRemindersDateChange(null);
+    handleSelectedReminderChange(null);
   };
 
   return (
@@ -34,7 +36,7 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
       {selectedDate && (
         <>
           <DialogTitle id="max-width-dialog-title">Reminder</DialogTitle>
-          {!reminderInformation && (
+          {!selectedReminder && (
             <>
               <DialogContent>
                 <DialogContentText>
@@ -49,19 +51,20 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
               </DialogContent>
             </>
           )}
-          {reminderInformation && (
+          {selectedReminder && (
             <>
               <DialogContent>
                 <DialogContentText>
                   {`Modify reminder - ${dateText}`}
                 </DialogContentText>
-                <ReminderInformation />
+                {selectedDate && (
+                  <ReminderForm
+                    reminder={selectedReminder}
+                    selectedDate={selectedDate}
+                    handleClose={handleClose}
+                  />
+                )}
               </DialogContent>
-              <DialogActions>
-                <Button onClick={() => {}} color="primary">
-                  Close
-                </Button>
-              </DialogActions>
             </>
           )}
         </>
@@ -71,12 +74,12 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
 };
 
 ReminderModal.propTypes = {
-  reminderInformation: PropTypes.instanceOf(Object),
+  selectedReminder: PropTypes.instanceOf(Object),
   selectedDate: PropTypes.instanceOf(Object).isRequired,
 };
 
 ReminderModal.defaultProps = {
-  reminderInformation: null,
+  selectedReminder: null,
 };
 
 export default withStyles(styles)(ReminderModal);

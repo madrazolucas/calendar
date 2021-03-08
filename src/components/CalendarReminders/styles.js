@@ -6,9 +6,11 @@ export default () => ({
     width: '94%',
     marginLeft: '3%',
     marginRight: '3%',
+    cursor: 'pointer',
   },
   reminderTitle: {
-    fontSize: 8,
+    fontSize: 10,
+    color: '#ffffff',
     textOverflow: 'ellipsis',
     maxWidth: '90%',
     whiteSpace: 'nowrap',

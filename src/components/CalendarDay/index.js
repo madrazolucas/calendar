@@ -6,26 +6,23 @@ import CalendarReminders from '../CalendarReminders';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
 import styles from './styles';
 
-const CalendarDay = ({
-  day,
-  month,
-  year,
-  isEnabled,
-  height,
-  classes,
-  handleSelectedReminderClick,
-}) => {
+const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
   const commonClasses = useCalendarCommonStyles();
-  const { handleSelectedRemindersChange } = useContext(RemindersContext);
+  const {
+    handleSelectedRemindersDateChange,
+    handleSelectedReminderChange,
+  } = useContext(RemindersContext);
+
   const cardClasses = isEnabled
     ? [commonClasses.cell, classes.cardCalendarDay]
     : [commonClasses.cell, classes.cardDisabled];
 
   const handleReminderClick = ({ reminder, selectedDate }) => {
     if (reminder) {
-      handleSelectedReminderClick({ reminder, selectedDate });
+      handleSelectedReminderChange(reminder);
+      handleSelectedRemindersDateChange(selectedDate);
     } else {
-      handleSelectedRemindersChange(selectedDate);
+      handleSelectedRemindersDateChange(selectedDate);
     }
   };
 
@@ -53,7 +50,12 @@ const CalendarDay = ({
       <CardContent className={classes.cardContent}>
         <Grid item direction="column" justify="center">
           <p className={[classes.cardText]}>{day}</p>
-          <CalendarReminders reminders={getRemindersFromDate()} />
+          <CalendarReminders
+            reminders={getRemindersFromDate()}
+            handleViewReminderClick={(reminder) =>
+              handleReminderClick({ reminder, selectedDate: reminder.date })
+            }
+          />
         </Grid>
       </CardContent>
     </Card>
@@ -67,7 +69,6 @@ CalendarDay.propTypes = {
   classes: PropTypes.instanceOf(Object),
   height: PropTypes.string.isRequired,
   isEnabled: PropTypes.bool,
-  handleSelectedReminderClick: PropTypes.func.isRequired,
 };
 
 CalendarDay.defaultProps = {

@@ -79,7 +79,24 @@ export function getCurrentMonthCalendarizableDays(date) {
   return calendarDays.concat(nextMonthDays);
 }
 
+export function buildMomentDateFromString({ date, time }) {
+  const dateValue = `${date.day}-${date.month}-${date.year} ${time.hour}:${time.minutes}`;
+
+  console.log(dateValue);
+  console.log(moment(dateValue, 'D-M-YYYY HH:mm'));
+
+  return moment(dateValue, 'D-M-YYYY HH:mm');
+}
+
+export function buildCurrentTimeMomentDateFromString({ date }) {
+  const hour = moment().format('HH');
+  const minutes = moment().format('mm');
+  return buildMomentDateFromString({ date, time: { hour, minutes } });
+}
+
 export default {
+  buildCurrentTimeMomentDateFromString,
+  buildMomentDateFromString,
   getWeekdays,
   getCurrentDate,
   getMonthYearDateText,

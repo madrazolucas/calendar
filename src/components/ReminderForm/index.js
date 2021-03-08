@@ -10,14 +10,27 @@ import {
 } from '@material-ui/pickers';
 import { Button, DialogActions } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
+import {
+  buildMomentDateFromString,
+  buildCurrentTimeMomentDateFromString,
+} from '../../utils/dateUtils';
 
-const ReminderForm = ({ selectedDate, handleClose }) => {
+const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const { reminders, handleRemindersChange } = useContext(RemindersContext);
 
-  const [title, setTitle] = useState('');
-  const [city, setCity] = useState('');
-  const [selectedTime, setSelectedTime] = useState({});
-  const [selectedColor, setSelectedColor] = useState('#0011aa');
+  // Form inputs as component state
+  const [title, setTitle] = useState(reminder ? reminder.title : '');
+  const [selectedTime, setSelectedTime] = useState(
+    reminder
+      ? buildMomentDateFromString({ date: selectedDate, time: reminder.time })
+      : buildCurrentTimeMomentDateFromString({ date: selectedDate })
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    reminder ? reminder.color : '#0011aa'
+  );
+  const [city, setCity] = useState(
+    reminder && reminder.city ? reminder.city : ''
+  );
   const [titleHasError, setTitleHasError] = useState(false);
 
   const resetFormState = () => {
@@ -110,7 +123,7 @@ const ReminderForm = ({ selectedDate, handleClose }) => {
           disabled={titleHasError || title.length === 0}
           onClick={() => handleSaveReminder()}
         >
-          Create
+          Save
         </Button>
       </DialogActions>
     </form>
@@ -119,7 +132,12 @@ const ReminderForm = ({ selectedDate, handleClose }) => {
 
 ReminderForm.propTypes = {
   selectedDate: PropTypes.instanceOf(Object).isRequired,
+  reminder: PropTypes.instanceOf(Object),
   handleClose: PropTypes.func.isRequired,
+};
+
+ReminderForm.defaultProps = {
+  reminder: null,
 };
 
 export default ReminderForm;

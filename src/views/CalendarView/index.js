@@ -9,6 +9,7 @@ const CalendarView = () => {
   const { month, year, date } = getCurrentDate();
   const [selectedDate, setSelectedDate] = useState({ date, month, year });
   const [reminders, setReminders] = useState([]);
+  const [selectedReminder, setSelectedReminder] = useState(null);
   const [selectedReminderDate, setSelectedReminderDate] = useState(null);
 
   return (
@@ -24,11 +25,15 @@ const CalendarView = () => {
           reminders,
           selectedReminderDate,
           handleRemindersChange: setReminders,
-          handleSelectedRemindersChange: setSelectedReminderDate,
+          handleSelectedReminderChange: setSelectedReminder,
+          handleSelectedRemindersDateChange: setSelectedReminderDate,
         }}
       >
         <CalendarGrid date={selectedDate.date} />
-        <ReminderModal selectedDate={selectedReminderDate} />
+        <ReminderModal
+          selectedDate={selectedReminderDate}
+          selectedReminder={selectedReminder}
+        />
       </RemindersContext.Provider>
     </>
   );

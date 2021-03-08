@@ -1,12 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DialogContent } from '@material-ui/core';
 
-const ReminderInformation = () => (
+const ReminderInformation = ({ reminder }) => (
   <>
     <DialogContent>
-      <p>Reminder Information</p>
+      <p>{reminder.title}</p>
     </DialogContent>
   </>
 );
+
+ReminderInformation.propTypes = {
+  reminder: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default ReminderInformation;
