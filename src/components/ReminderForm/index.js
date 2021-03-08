@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import MomentUtils from '@date-io/moment';
@@ -7,13 +8,39 @@ import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+import { Button, DialogActions } from '@material-ui/core';
+import RemindersContext from '../../context/remindersContext';
 
-const ReminderForm = () => {
+const ReminderForm = ({ selectedDate, handleClose }) => {
+  const { reminders, handleRemindersChange } = useContext(RemindersContext);
+
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
   const [selectedTime, setSelectedTime] = useState({});
-  const [selectedColor, setSelectedColor] = useState('#ddee00');
+  const [selectedColor, setSelectedColor] = useState('#0011aa');
   const [titleHasError, setTitleHasError] = useState(false);
+
+  const resetFormState = () => {
+    setTitle('');
+    setCity('');
+    setSelectedColor('#0011aa');
+    setTitleHasError(false);
+  };
+
+  const handleSaveReminder = () => {
+    handleRemindersChange([
+      ...reminders,
+      {
+        title,
+        city,
+        time: selectedTime,
+        color: selectedColor,
+        date: selectedDate,
+      },
+    ]);
+    resetFormState();
+    handleClose();
+  };
 
   const handleTitleChange = (event) => {
     setTitleHasError(event.target.value.length > 30);
@@ -45,6 +72,7 @@ const ReminderForm = () => {
         helperText={`${title.length}/30`}
         onChange={handleTitleChange}
         margin="normal"
+        required
       />
       <TextField
         id="city-input"
@@ -53,7 +81,7 @@ const ReminderForm = () => {
         helperText={city.length === 0 ? 'Search a city' : ''}
         onChange={handleCityChange}
         margin="normal"
-        style={{ marginRight: 16 }}
+        style={{ marginRight: 18 }}
       />
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <KeyboardTimePicker
@@ -73,8 +101,25 @@ const ReminderForm = () => {
           onChange={(value) => handleColorChange(value)}
         />
       </div>
+      <DialogActions>
+        <Button onClick={() => handleClose()} color="secondary">
+          Close
+        </Button>
+        <Button
+          color="primary"
+          disabled={titleHasError || title.length === 0}
+          onClick={() => handleSaveReminder()}
+        >
+          Create
+        </Button>
+      </DialogActions>
     </form>
   );
+};
+
+ReminderForm.propTypes = {
+  selectedDate: PropTypes.instanceOf(Object).isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default ReminderForm;

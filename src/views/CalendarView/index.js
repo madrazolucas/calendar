@@ -8,7 +8,7 @@ import { getCurrentDate } from '../../utils/dateUtils';
 const CalendarView = () => {
   const { month, year, date } = getCurrentDate();
   const [selectedDate, setSelectedDate] = useState({ date, month, year });
-  const [reminders, setReminders] = useState({});
+  const [reminders, setReminders] = useState([]);
   const [selectedReminderDate, setSelectedReminderDate] = useState(null);
 
   return (
@@ -21,7 +21,8 @@ const CalendarView = () => {
       />
       <RemindersContext.Provider
         value={{
-          ...reminders,
+          reminders,
+          selectedReminderDate,
           handleRemindersChange: setReminders,
           handleSelectedRemindersChange: setSelectedReminderDate,
         }}

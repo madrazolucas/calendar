@@ -16,6 +16,9 @@ import styles from './styles';
 
 const ReminderModal = ({ reminderInformation, selectedDate }) => {
   const { handleSelectedRemindersChange } = useContext(RemindersContext);
+  const dateText = selectedDate
+    ? `${selectedDate.day}/${selectedDate.month}/${selectedDate.year}`
+    : '';
 
   const handleClose = () => {
     handleSelectedRemindersChange(null);
@@ -25,7 +28,7 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
     <Dialog
       fullWidth
       open={!!selectedDate}
-      maxWidth="md"
+      maxWidth="sm"
       aria-labelledby="max-width-dialog"
     >
       {selectedDate && (
@@ -35,26 +38,22 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
             <>
               <DialogContent>
                 <DialogContentText>
-                  Add a new reminder -
-                  {` ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}`}
+                  {`Add a new reminder - ${dateText}`}
                 </DialogContentText>
-                {selectedDate && <ReminderForm selectedDate={selectedDate} />}
+                {selectedDate && (
+                  <ReminderForm
+                    selectedDate={selectedDate}
+                    handleClose={handleClose}
+                  />
+                )}
               </DialogContent>
-              <DialogActions>
-                <Button onClick={() => handleClose()} color="secondary">
-                  Close
-                </Button>
-                <Button onClick={() => {}} color="primary">
-                  Create
-                </Button>
-              </DialogActions>
             </>
           )}
           {reminderInformation && (
             <>
               <DialogContent>
                 <DialogContentText>
-                  Visualize the information of the created reminder.
+                  {`Modify reminder - ${dateText}`}
                 </DialogContentText>
                 <ReminderInformation />
               </DialogContent>
