@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardContent, Grid, withStyles } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
+import CalendarReminders from '../CalendarReminders';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
 import styles from './styles';
 
@@ -28,6 +29,16 @@ const CalendarDay = ({
     }
   };
 
+  const getRemindersFromDate = () => {
+    const { reminders } = useContext(RemindersContext);
+    return reminders.filter(
+      (reminder) =>
+        reminder.date.day === day &&
+        reminder.date.month === month &&
+        reminder.date.year === year
+    );
+  };
+
   return (
     <Card
       variant="outlined"
@@ -39,9 +50,10 @@ const CalendarDay = ({
           : {}
       }
     >
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <Grid item direction="column" justify="center">
           <p className={[classes.cardText]}>{day}</p>
+          <CalendarReminders reminders={getRemindersFromDate()} />
         </Grid>
       </CardContent>
     </Card>

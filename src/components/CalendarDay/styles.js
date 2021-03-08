@@ -1,6 +1,6 @@
 export default () => ({
   cardDisabled: {
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#ededed',
     cursor: 'not-allowed',
   },
   cardCalendarDay: {
@@ -14,5 +14,10 @@ export default () => ({
     textAlign: 'center',
     fontSize: 10,
     margin: 0,
+  },
+  cardContent: {
+    paddingTop: 8,
+    paddingLeft: 0,
+    paddingRight: 0,
   },
 });
