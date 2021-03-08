@@ -49,8 +49,8 @@ const DateNavigator = ({ date, month, year, handleDateChange }) => (
 
 DateNavigator.propTypes = {
   month: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  date: PropTypes.instanceOf(Object).isRequired,
   handleDateChange: PropTypes.func.isRequired,
 };
 

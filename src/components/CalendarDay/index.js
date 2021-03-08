@@ -47,11 +47,11 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
       onClick={
         isEnabled
           ? () => handleReminderClick({ selectedDate: { day, month, year } })
-          : {}
+          : () => {}
       }
     >
       <CardContent className={classes.cardContent}>
-        <Grid item direction="column" justify="center">
+        <Grid item>
           <p className={[classes.cardText]}>{day}</p>
           <CalendarReminders
             reminders={getRemindersFromDate()}
@@ -66,9 +66,9 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
 };
 
 CalendarDay.propTypes = {
-  day: PropTypes.string.isRequired,
-  month: PropTypes.string,
-  year: PropTypes.string,
+  day: PropTypes.number.isRequired,
+  month: PropTypes.number,
+  year: PropTypes.number,
   classes: PropTypes.instanceOf(Object),
   height: PropTypes.string.isRequired,
   isEnabled: PropTypes.bool,

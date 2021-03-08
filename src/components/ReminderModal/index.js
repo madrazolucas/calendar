@@ -75,11 +75,12 @@ const ReminderModal = ({ selectedReminder, selectedDate }) => {
 
 ReminderModal.propTypes = {
   selectedReminder: PropTypes.instanceOf(Object),
-  selectedDate: PropTypes.instanceOf(Object).isRequired,
+  selectedDate: PropTypes.instanceOf(Object),
 };
 
 ReminderModal.defaultProps = {
   selectedReminder: null,
+  selectedDate: null,
 };
 
 export default withStyles(styles)(ReminderModal);
