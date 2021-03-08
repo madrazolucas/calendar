@@ -35,8 +35,8 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
             <>
               <DialogContent>
                 <DialogContentText>
-                  {`${selectedDate.day}/${selectedDate.month}/${selectedDate.year} `}
-                  - Add a new reminder.
+                  Add a new reminder -
+                  {` ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}`}
                 </DialogContentText>
                 {selectedDate && <ReminderForm selectedDate={selectedDate} />}
               </DialogContent>
