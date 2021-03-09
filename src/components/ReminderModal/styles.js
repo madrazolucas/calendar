@@ -1,5 +1,7 @@
 export default () => ({
-  modal: {
-    height: '80%',
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingRight: 16,
   },
 });

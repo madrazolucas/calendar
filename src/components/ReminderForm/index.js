@@ -8,6 +8,8 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, DialogActions, Typography } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
 import { getCurrentTime } from '../../utils/dateUtils';
@@ -64,14 +66,28 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
     if (reminder) {
       const remindersToUpdate = [...reminders];
       const reminderToModifyIndex = remindersToUpdate.findIndex(
-        (savedRemider) => savedRemider.title === reminder.title
+        (savedRemider) => savedRemider === reminder
       );
-      if (reminderToModifyIndex !== -1) {
+      if (reminderToModifyIndex > -1) {
         remindersToUpdate[reminderToModifyIndex] = reminderToAdd;
       }
       handleRemindersChange(remindersToUpdate);
     } else {
       handleRemindersChange([...reminders, reminderToAdd]);
+    }
+
+    resetFormState();
+    handleClose();
+  };
+
+  const handleDeleteReminder = () => {
+    const remindersToUpdate = [...reminders];
+    const reminderIndex = remindersToUpdate.findIndex(
+      (savedRemider) => savedRemider === reminder
+    );
+    if (reminderIndex > -1) {
+      remindersToUpdate.splice(reminderIndex, 1);
+      handleRemindersChange(remindersToUpdate);
     }
 
     resetFormState();
@@ -168,11 +184,17 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
         />
       </div>
       <DialogActions>
-        <Button onClick={() => handleClose()} color="secondary">
-          Close
-        </Button>
+        {reminder && (
+          <IconButton
+            aria-label="delete"
+            onClick={() => handleDeleteReminder()}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
         <Button
           color="primary"
+          variant="contained"
           disabled={titleHasError || title.length === 0}
           onClick={() => handleSaveReminder()}
         >

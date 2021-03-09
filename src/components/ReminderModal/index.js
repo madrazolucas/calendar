@@ -7,11 +7,13 @@ import {
   DialogContentText,
   withStyles,
 } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import ReminderForm from '../ReminderForm';
 import RemindersContext from '../../context/remindersContext';
 import styles from './styles';
 
-const ReminderModal = ({ selectedReminder, selectedDate }) => {
+const ReminderModal = ({ selectedReminder, selectedDate, classes }) => {
   const {
     handleSelectedRemindersDateChange,
     handleSelectedReminderChange,
@@ -35,7 +37,12 @@ const ReminderModal = ({ selectedReminder, selectedDate }) => {
     >
       {selectedDate && (
         <>
-          <DialogTitle id="max-width-dialog-title">Reminder</DialogTitle>
+          <div className={classes.header}>
+            <DialogTitle id="max-width-dialog-title">Reminder</DialogTitle>
+            <IconButton aria-label="close" onClick={() => handleClose()}>
+              <CloseIcon />
+            </IconButton>
+          </div>
           {!selectedReminder && (
             <>
               <DialogContent>
@@ -76,6 +83,7 @@ const ReminderModal = ({ selectedReminder, selectedDate }) => {
 ReminderModal.propTypes = {
   selectedReminder: PropTypes.instanceOf(Object),
   selectedDate: PropTypes.instanceOf(Object),
+  classes: PropTypes.instanceOf(Object).isRequired,
 };
 
 ReminderModal.defaultProps = {
