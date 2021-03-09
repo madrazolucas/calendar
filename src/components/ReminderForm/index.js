@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import MomentUtils from '@date-io/moment';
@@ -7,9 +7,11 @@ import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Button, DialogActions } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
 import { getCurrentTime } from '../../utils/dateUtils';
+import { fetchCities } from '../../services/weatherService';
 
 const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const { reminders, handleRemindersChange } = useContext(RemindersContext);
@@ -25,7 +27,15 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const [city, setCity] = useState(
     reminder && reminder.city ? reminder.city : ''
   );
+  const [citySearch, setCitySearch] = useState(
+    reminder && reminder.city ? reminder.city : ''
+  );
   const [titleHasError, setTitleHasError] = useState(false);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    if (citySearch.length) fetchCities(citySearch, setCities);
+  }, [citySearch]);
 
   const resetFormState = () => {
     setTitle('');
@@ -65,8 +75,17 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
     setTitle(event.target.value);
   };
 
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
+  const handleCitySearchChange = ({ event, cityInput }) => {
+    const newValue = cityInput || '';
+    if (event && event.type === 'change') {
+      setCitySearch(newValue);
+    }
+  };
+
+  const handleCityChange = ({ cityInput }) => {
+    const cityValue = cityInput || '';
+    setCity(cityValue);
+    setCitySearch(cityValue);
   };
 
   const handleTimeChange = (time) => {
@@ -90,14 +109,22 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
         margin="normal"
         required
       />
-      <TextField
-        id="city-input"
-        label="City"
-        value={city}
-        helperText={city.length === 0 ? 'Search a city' : ''}
-        onChange={handleCityChange}
-        margin="normal"
-        style={{ marginRight: 18 }}
+      <Autocomplete
+        id="city-selector-input"
+        options={cities.map((cityOption) => cityOption.name)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="City"
+            helperText={city.length === 0 ? 'Search a city' : ''}
+          />
+        )}
+        inputValue={citySearch}
+        loading={cities.length === 0 && citySearch.length > 0}
+        onChange={(_, cityInput) => handleCityChange({ cityInput })}
+        onInputChange={(event, cityInput) =>
+          handleCitySearchChange({ event, cityInput })
+        }
       />
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <KeyboardTimePicker
