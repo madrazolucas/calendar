@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { DAYS_IN_WEEK, MINUTES_IN_HOUR } from '../constants';
 
-export function getWeekdays() {
+export function getWeekDays() {
   const weekdayLongName = moment.weekdays();
   const weekdayShortName = moment.weekdaysShort();
 
@@ -97,7 +97,7 @@ export function compareRemindersTime(reminderA, reminderB) {
 export default {
   getCurrentTime,
   compareRemindersTime,
-  getWeekdays,
+  getWeekDays,
   getCurrentDate,
   getMonthYearDateText,
   getCurrentMonthCalendarizableDays,

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Card, Grid, withStyles } from '@material-ui/core';
-import { getWeekdays } from '../../utils/dateUtils';
+import { getWeekDays } from '../../utils/dateUtils';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
 import styles from './styles';
 
-const WeekdaysHeader = ({ classes }) => {
+const WeekDaysHeader = ({ classes }) => {
   const commonClasses = useCalendarCommonStyles();
   const cardClasses = [commonClasses.cell, classes.headerCell];
 
-  return getWeekdays().map((day) => (
+  return getWeekDays().map((day) => (
     <Card key={day.longName} variant="outlined" className={cardClasses}>
       <Grid item className={classes.fullText}>
         {day.longName}
@@ -20,4 +20,4 @@ const WeekdaysHeader = ({ classes }) => {
   ));
 };
 
-export default withStyles(styles)(WeekdaysHeader);
+export default withStyles(styles)(WeekDaysHeader);

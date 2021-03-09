@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
-import WeekdaysHeader from '../WeekdaysHeader';
+import WeekDaysHeader from '../WeekDaysHeader';
 import CalendarDay from '../CalendarDay';
 import { getCurrentMonthCalendarizableDays } from '../../utils/dateUtils';
 import { CALENDAR_ROW_HEIGHT, DAYS_IN_WEEK } from '../../constants';
@@ -34,7 +34,7 @@ const CalendarGrid = ({ date }) => {
       justify="center"
       spacing={0}
     >
-      <WeekdaysHeader />
+      <WeekDaysHeader />
       {calendarDays.map((day) => (
         <CalendarDay
           key={`${day.number}.${day.month}.${day.year}`}
