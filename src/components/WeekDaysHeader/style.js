@@ -4,9 +4,9 @@ export default (theme) => ({
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    fontSize: 14,
-    borderRadius: 4,
     backgroundColor: '#e6e6e6',
+    borderRadius: 4,
+    fontSize: 14,
   },
   shortText: {
     display: 'inline',

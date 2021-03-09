@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Grid, withStyles } from '@material-ui/core';
 import { getWeekDays } from '../../utils/dateUtils';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
-import styles from './styles';
+import styles from './style';
 
 const WeekDaysHeader = ({ classes }) => {
   const commonClasses = useCalendarCommonStyles();
