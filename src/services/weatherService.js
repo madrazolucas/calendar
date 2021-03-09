@@ -22,7 +22,8 @@ export function fetchWeather(city, callback) {
   axios
     .get(requestUrl)
     .then((response) => {
-      callback(response.data.current.condition.text);
+      const conditionData = response.data.current.condition;
+      callback({ description: conditionData.text, icon: conditionData.icon });
     })
     .catch(() => {
       callback(null);

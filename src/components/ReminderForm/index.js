@@ -136,9 +136,18 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
         }
       />
       {weatherInformation && (
-        <Typography variant="body2" gutterBottom style={{ paddingTop: 8 }}>
-          {`Weather in this city: ${weatherInformation}`}
-        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="body2" gutterBottom style={{ paddingTop: 8 }}>
+            {`Weather in this city: ${weatherInformation.description}`}
+          </Typography>
+          {weatherInformation.icon && (
+            <img
+              src={weatherInformation.icon}
+              style={{ height: 32, paddingTop: 6 }}
+              alt="Weather icon"
+            />
+          )}
+        </div>
       )}
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <KeyboardTimePicker
