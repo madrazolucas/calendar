@@ -1,4 +1,3 @@
-// TODO: Move api key from this config file
 const config = {
   api: {
     weather: {
