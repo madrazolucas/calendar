@@ -13,11 +13,19 @@ export default () => ({
     color: '#3c4043',
     textAlign: 'center',
     fontSize: 10,
-    margin: 0,
+    marginTop: 8,
   },
   cardContent: {
-    paddingTop: 8,
+    paddingTop: 0,
     paddingLeft: 0,
     paddingRight: 0,
+  },
+  cardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginLeft: 6,
+  },
+  cardNumber: {
+    marginTop: 8,
   },
 });

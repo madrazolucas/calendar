@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardContent, Grid, withStyles } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import RemindersContext from '../../context/remindersContext';
 import CalendarReminders from '../CalendarReminders';
 import useCalendarCommonStyles from '../../hooks/useCalendarCommonStyles';
@@ -10,6 +12,8 @@ import styles from './styles';
 const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
   const commonClasses = useCalendarCommonStyles();
   const {
+    reminders,
+    handleRemindersChange,
     handleSelectedRemindersDateChange,
     handleSelectedReminderChange,
   } = useContext(RemindersContext);
@@ -27,8 +31,18 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
     }
   };
 
+  const handleDeleteAllRemindersByDate = () => {
+    const remindersToUpdate = [...reminders];
+    const remindersFilteredByDate = remindersToUpdate.filter(
+      (reminderValue) =>
+        reminderValue.date.day !== day &&
+        reminderValue.date.month !== month &&
+        reminderValue.date.year !== year
+    );
+    handleRemindersChange(remindersFilteredByDate);
+  };
+
   const getRemindersFromDate = () => {
-    const { reminders } = useContext(RemindersContext);
     const filteredByDateReminders = reminders.filter(
       (reminder) =>
         reminder.date.day === day &&
@@ -38,6 +52,8 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
 
     return filteredByDateReminders.sort(compareRemindersTime);
   };
+
+  const dayReminders = getRemindersFromDate();
 
   return (
     <Card
@@ -52,9 +68,23 @@ const CalendarDay = ({ day, month, year, isEnabled, height, classes }) => {
     >
       <CardContent className={classes.cardContent}>
         <Grid item>
-          <p className={[classes.cardText]}>{day}</p>
+          <div className={classes.cardHeader}>
+            <p className={[classes.cardText]}>{day}</p>
+            {!!dayReminders.length && (
+              <IconButton
+                size="small"
+                aria-label="delete"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteAllRemindersByDate();
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </div>
           <CalendarReminders
-            reminders={getRemindersFromDate()}
+            reminders={dayReminders}
             handleViewReminderClick={(reminder) =>
               handleReminderClick({ reminder, selectedDate: reminder.date })
             }
