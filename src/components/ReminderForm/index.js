@@ -195,6 +195,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
         <Button
           color="primary"
           variant="contained"
+          data-testid="form-save-button"
           disabled={titleHasError || title.length === 0}
           onClick={() => handleSaveReminder()}
         >
