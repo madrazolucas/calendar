@@ -4,7 +4,7 @@ This is a multiplatform Calendar Web application created by using React. It incl
 
 ## Demo
 
-If you like to open a functional version of the web application, please click [here](https://madrazolucas.github.io/calendar/)
+If you like to open a functional version of the web application, please click [here](https://lmadrazo-calendar.herokuapp.com/)
 
 
 ## How to run locally?

@@ -6,7 +6,9 @@ export function fetchCities(cityName, callback) {
   const requestUrl = `${domain}${endpoint.search}?key=${key}&q=${cityName}`;
 
   axios
-    .get(requestUrl)
+    .get(requestUrl, {
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    })
     .then((response) => {
       callback(response.data);
     })
@@ -20,7 +22,9 @@ export function fetchWeather(city, callback) {
   const requestUrl = `${domain}${endpoint.forecast}?key=${key}&q=${city}`;
 
   axios
-    .get(requestUrl)
+    .get(requestUrl, {
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    })
     .then((response) => {
       const conditionData = response.data.current.condition;
       callback({ description: conditionData.text, icon: conditionData.icon });
