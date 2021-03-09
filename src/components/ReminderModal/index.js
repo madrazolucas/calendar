@@ -1,68 +1,77 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button,
   Dialog,
   DialogTitle,
-  DialogActions,
   DialogContent,
   DialogContentText,
   withStyles,
 } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import ReminderForm from '../ReminderForm';
-import ReminderInformation from '../ReminderInformation';
 import RemindersContext from '../../context/remindersContext';
 import styles from './styles';
 
-const ReminderModal = ({ reminderInformation, selectedDate }) => {
-  const { handleSelectedRemindersChange } = useContext(RemindersContext);
+const ReminderModal = ({ selectedReminder, selectedDate, classes }) => {
+  const {
+    handleSelectedRemindersDateChange,
+    handleSelectedReminderChange,
+  } = useContext(RemindersContext);
+
+  const dateText = selectedDate
+    ? `${selectedDate.day}/${selectedDate.month}/${selectedDate.year}`
+    : '';
 
   const handleClose = () => {
-    handleSelectedRemindersChange(null);
+    handleSelectedRemindersDateChange(null);
+    handleSelectedReminderChange(null);
   };
 
   return (
     <Dialog
       fullWidth
       open={!!selectedDate}
-      maxWidth="md"
+      maxWidth="sm"
       aria-labelledby="max-width-dialog"
     >
       {selectedDate && (
         <>
-          <DialogTitle id="max-width-dialog-title">Reminder</DialogTitle>
-          {!reminderInformation && (
+          <div className={classes.header}>
+            <DialogTitle id="max-width-dialog-title">Reminder</DialogTitle>
+            <IconButton aria-label="close" onClick={() => handleClose()}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+          {!selectedReminder && (
             <>
               <DialogContent>
                 <DialogContentText>
-                  {`${selectedDate.day}/${selectedDate.month}/${selectedDate.year} `}
-                  - Add a new reminder.
+                  {`Add a new reminder - ${dateText}`}
                 </DialogContentText>
-                {selectedDate && <ReminderForm selectedDate={selectedDate} />}
+                {selectedDate && (
+                  <ReminderForm
+                    selectedDate={selectedDate}
+                    handleClose={handleClose}
+                  />
+                )}
               </DialogContent>
-              <DialogActions>
-                <Button onClick={() => handleClose()} color="secondary">
-                  Close
-                </Button>
-                <Button onClick={() => {}} color="primary">
-                  Create
-                </Button>
-              </DialogActions>
             </>
           )}
-          {reminderInformation && (
+          {selectedReminder && (
             <>
               <DialogContent>
                 <DialogContentText>
-                  Visualize the information of the created reminder.
+                  {`Modify reminder - ${dateText}`}
                 </DialogContentText>
-                <ReminderInformation />
+                {selectedDate && (
+                  <ReminderForm
+                    reminder={selectedReminder}
+                    selectedDate={selectedDate}
+                    handleClose={handleClose}
+                  />
+                )}
               </DialogContent>
-              <DialogActions>
-                <Button onClick={() => {}} color="primary">
-                  Close
-                </Button>
-              </DialogActions>
             </>
           )}
         </>
@@ -72,12 +81,14 @@ const ReminderModal = ({ reminderInformation, selectedDate }) => {
 };
 
 ReminderModal.propTypes = {
-  reminderInformation: PropTypes.instanceOf(Object),
-  selectedDate: PropTypes.instanceOf(Object).isRequired,
+  selectedReminder: PropTypes.instanceOf(Object),
+  selectedDate: PropTypes.instanceOf(Object),
+  classes: PropTypes.instanceOf(Object).isRequired,
 };
 
 ReminderModal.defaultProps = {
-  reminderInformation: null,
+  selectedReminder: null,
+  selectedDate: null,
 };
 
 export default withStyles(styles)(ReminderModal);

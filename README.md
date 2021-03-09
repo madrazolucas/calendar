@@ -1,70 +1,56 @@
 # Calendar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a multiplatform Calendar Web application created by using React. It includes the below [detailed features](#features).
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+If you like to open a functional version of the web application, please click [here](https://madrazolucas.github.io/calendar/)
 
-### `npm start`
 
-Runs the app in the development mode.\
+## How to run locally?
+
+First of all, clone this repository.
+
+```sh
+git clone https://madrazolucas.github.io/calendar/
+cd calendar
+```
+
+After that, install the dependencies and run the project.
+
+```sh
+npm install
+npm start
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Main project dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The following are the most relevant dependencies used by this project:
+- [React](https://reactjs.org/) - A Java Script library for building user interfaces.
+- [Material-UI](https://material-ui.com/) - Component library to build React applications.
+- [Axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
+- [Moment.js](https://momentjs.com/) - A JavaScript date library for parsing, validating, manipulating, and formatting dates.
 
-### `npm run build`
+## Features
+- Display an interactive calendar and navigate between months
+- Ability to add reminders, including a title, day, time, color and city.
+- Display reminders on the calendar view in the correct time order, and with the color provided on its creation.
+- Ability to modify or delete a selected reminder.
+- Ability to delete all the reminders of a specific day.
+- See weather information of the reminder city.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to run unit test?
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Run the following script:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+npm test
+```
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Notes/Considerations
+- You can see in the .eslintrc file the styling guide configuration.
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- In order to get cities and weather information, the [weather-api](https://www.weatherapi.com/) is being used by this project. Just for demo proposal, a temporal free api-key is added to this repository.

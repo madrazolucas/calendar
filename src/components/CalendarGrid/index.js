@@ -37,6 +37,7 @@ const CalendarGrid = ({ date }) => {
       <WeekdaysHeader />
       {calendarDays.map((day) => (
         <CalendarDay
+          key={`${day.number}.${day.month}.${day.year}`}
           day={day.number}
           month={day.month}
           year={day.year}

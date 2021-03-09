@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { DAYS_IN_WEEK } from '../constants';
+import { DAYS_IN_WEEK, MINUTES_IN_HOUR } from '../constants';
 
 export function getWeekdays() {
   const weekdayLongName = moment.weekdays();
@@ -78,8 +78,25 @@ export function getCurrentMonthCalendarizableDays(date) {
 
   return calendarDays.concat(nextMonthDays);
 }
+export function getCurrentTime() {
+  return moment();
+}
+
+const getMinutesFromMomentDateTime = (date) => {
+  const hours = moment(date).format('H');
+  const minutes = moment(date).format('m');
+  return hours * MINUTES_IN_HOUR + minutes;
+};
+
+export function compareRemindersTime(reminderA, reminderB) {
+  const minutesReminderA = getMinutesFromMomentDateTime(reminderA.time);
+  const minutesReminderB = getMinutesFromMomentDateTime(reminderB.time);
+  return minutesReminderA - minutesReminderB;
+}
 
 export default {
+  getCurrentTime,
+  compareRemindersTime,
   getWeekdays,
   getCurrentDate,
   getMonthYearDateText,
