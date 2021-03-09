@@ -8,10 +8,10 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Button, DialogActions } from '@material-ui/core';
+import { Button, DialogActions, Typography } from '@material-ui/core';
 import RemindersContext from '../../context/remindersContext';
 import { getCurrentTime } from '../../utils/dateUtils';
-import { fetchCities } from '../../services/weatherService';
+import { fetchCities, fetchWeather } from '../../services/weatherService';
 
 const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   const { reminders, handleRemindersChange } = useContext(RemindersContext);
@@ -32,15 +32,23 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
   );
   const [titleHasError, setTitleHasError] = useState(false);
   const [cities, setCities] = useState([]);
+  const [weatherInformation, setWeatherInformation] = useState(null);
 
   useEffect(() => {
     if (citySearch.length) fetchCities(citySearch, setCities);
   }, [citySearch]);
 
+  useEffect(() => {
+    if (city.length) fetchWeather(city, setWeatherInformation);
+  }, [city]);
+
   const resetFormState = () => {
     setTitle('');
     setCity('');
+    setCities([]);
+    setCitySearch('');
     setSelectedColor('#0011aa');
+    setWeatherInformation(null);
     setTitleHasError(false);
   };
 
@@ -79,6 +87,7 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
     const newValue = cityInput || '';
     if (event && event.type === 'change') {
       setCitySearch(newValue);
+      setWeatherInformation(null);
     }
   };
 
@@ -126,6 +135,11 @@ const ReminderForm = ({ selectedDate, handleClose, reminder }) => {
           handleCitySearchChange({ event, cityInput })
         }
       />
+      {weatherInformation && (
+        <Typography variant="body2" gutterBottom style={{ paddingTop: 8 }}>
+          {`Weather in this city: ${weatherInformation}`}
+        </Typography>
+      )}
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <KeyboardTimePicker
           id="time-picker"

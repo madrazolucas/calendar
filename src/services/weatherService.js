@@ -10,12 +10,26 @@ export function fetchCities(cityName, callback) {
     .then((response) => {
       callback(response.data);
     })
-    .catch((error) => {
-      console.log(error.message);
+    .catch(() => {
       callback([]);
+    });
+}
+
+export function fetchWeather(city, callback) {
+  const { domain, endpoint, key } = config.api.weather;
+  const requestUrl = `${domain}${endpoint.forecast}?key=${key}&q=${city}`;
+
+  axios
+    .get(requestUrl)
+    .then((response) => {
+      callback(response.data.current.condition.text);
+    })
+    .catch(() => {
+      callback(null);
     });
 }
 
 export default {
   fetchCities,
+  fetchWeather,
 };
